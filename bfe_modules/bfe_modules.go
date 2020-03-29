@@ -20,8 +20,10 @@ import (
 	"github.com/baidu/bfe/bfe_module"
 	"github.com/baidu/bfe/bfe_modules/mod_access"
 	"github.com/baidu/bfe/bfe_modules/mod_auth_basic"
+	"github.com/baidu/bfe/bfe_modules/mod_auth_jwt"
 	"github.com/baidu/bfe/bfe_modules/mod_block"
 	"github.com/baidu/bfe/bfe_modules/mod_compress"
+	"github.com/baidu/bfe/bfe_modules/mod_doh"
 	"github.com/baidu/bfe/bfe_modules/mod_errors"
 	"github.com/baidu/bfe/bfe_modules/mod_geo"
 	"github.com/baidu/bfe/bfe_modules/mod_header"
@@ -32,7 +34,10 @@ import (
 	"github.com/baidu/bfe/bfe_modules/mod_redirect"
 	"github.com/baidu/bfe/bfe_modules/mod_rewrite"
 	"github.com/baidu/bfe/bfe_modules/mod_static"
+	"github.com/baidu/bfe/bfe_modules/mod_tag"
+	"github.com/baidu/bfe/bfe_modules/mod_trace"
 	"github.com/baidu/bfe/bfe_modules/mod_trust_clientip"
+	"github.com/baidu/bfe/bfe_modules/mod_userid"
 )
 
 // list of all modules, the order is very important
@@ -44,9 +49,18 @@ var moduleList = []bfe_module.BfeModule{
 	// Requirement: After mod_trust_clientip
 	mod_logid.NewModuleLogId(),
 
+	// mode_userid
+	mod_userid.NewModuleUserID(),
+
 	// mod_geo
 	// Requirement: After mod_logid
 	mod_geo.NewModuleGeo(),
+
+	// mod_tag
+	mod_tag.NewModuleTag(),
+
+	// mod_trace
+	mod_trace.NewModuleTrace(),
 
 	// mod_block
 	// Requirement: After mod_logid
@@ -59,6 +73,8 @@ var moduleList = []bfe_module.BfeModule{
 	// mod_auth_basic
 	// Requirement: before mod_static
 	mod_auth_basic.NewModuleAuthBasic(),
+
+	mod_doh.NewModuleDoh(),
 
 	// mod_redirect
 	// Requirement: After mod_logid
@@ -87,6 +103,9 @@ var moduleList = []bfe_module.BfeModule{
 
 	// mod_access
 	mod_access.NewModuleAccess(),
+
+	// mod_auth_jwt
+	mod_auth_jwt.NewModuleAuthJWT(),
 }
 
 // init modules list
